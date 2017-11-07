@@ -1,0 +1,14 @@
+<body>
+  Armada ( X | O | - )
+  <div id="infoArmed">
+    X
+  </div>
+  <br>
+  Engarupado ( Sim | Não )
+  <div id="infoMounted">
+    N
+  </div>
+  <button type="button" name="button" (click)="sendUpdate({id: 51, armed: '-', mounted: 'S'})">Enviar Update</button>
+  <br>
+  <button type="button" name="button" (click)="turnOffline()">Ficar Offline</button>
+</body>
