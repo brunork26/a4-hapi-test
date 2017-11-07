@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as nes from '../client.min.js';
+import * as nes from 'nes';
 
 @Component({
   selector: 'app-narrator',
@@ -8,15 +8,17 @@ import * as nes from '../client.min.js';
 })
 export class NarratorComponent implements OnInit {
   public client = new nes.Client('ws://localhost:6001'); // <-- Config the port!
+  private lassoer = {armed: 'X', mounted: 'N'};
   constructor() {
-      this.client.connect(function (error) {
+      var self = this
+      self.client.connect(function (error) {
       if(error){
         return console.error("Cant connect to ws server: " + error.message);
       }
-      this.client.subscribe('/event/1/narrator', this.handleJudge, function (err) {
+      self.client.subscribe('/event/1/narrator', self.handleJudge.bind(self), function (err) {
         console.log(err);
       });
-      this.client.subscribe('/event/1/lassoers', this.handleLassoerUpdate, function (err) {
+      self.client.subscribe('/event/1/lassoers', self.handleLassoerUpdate.bind(self), function (err) {
         console.log(err);
       });
     });
@@ -33,9 +35,8 @@ export class NarratorComponent implements OnInit {
   }
 
   public handleLassoerUpdate(message, flags){
-   let lassoerObject = message.data;
-   document.getElementById("infoArmed").innerHTML = lassoerObject.armed;
-   document.getElementById("infoMounted").innerHTML = lassoerObject.mounted;
+    let lassoerObject = message.data;
+    this.lassoer = lassoerObject
   }
 
   ngOnInit() {

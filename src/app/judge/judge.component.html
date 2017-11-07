@@ -1,12 +1,12 @@
 <body>
   Armada ( X | O | - )
-  <div id="infoArmed">
-    X
+  <div>
+    {{lassoer.armed}}
   </div>
   <br>
   Engarupado ( Sim | Não )
-  <div id="infoMounted">
-    N
+  <div>
+    {{lassoer.mounted}}
   </div>
   <button type="button" name="button" (click)="sendUpdate({id: 51, armed: '-', mounted: 'S'})">Enviar Update</button>
   <br>
